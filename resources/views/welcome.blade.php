@@ -72,15 +72,14 @@
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
+                        <!--@if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif-->
                     @endauth
                 </div>
             @endif
 
             <div class="content">
-                
                     <h1 style="line-height:0">Semar</h1>
                     <p>Sistem Elektronik Manajemen Akta Cerai</p>
                 <div class="links">
