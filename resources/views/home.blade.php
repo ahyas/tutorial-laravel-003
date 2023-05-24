@@ -15,6 +15,11 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <table>
+                        <tr>
+                            <td>Nama</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
