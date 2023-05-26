@@ -81,7 +81,7 @@
 
             <div class="content">
                     <h1 style="line-height:0">Semar</h1>
-                    <p>Sistem Elektronik Manajemen Akta Cerai</p>
+                    <p><b>Sistem Elektronik Manajemen Akta Cerai</b></p>
                 <div class="links">
                     <a href="#">Docs</a>
                     <a href="#">Laracasts</a>
