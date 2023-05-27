@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $perkara = DB::table("perkara")
-        ->where("perkara.tahapan_terakhir_id",19)
+        //->where("perkara.tahapan_terakhir_id",19)
         ->select('perkara.perkara_id', 'perkara.tanggal_pendaftaran', 'perkara.jenis_perkara_text', 'perkara.nomor_perkara', 'perkara.tahapan_terakhir_text',"perkara_pihak1.nama AS pihak_1","perkara_pihak2.nama AS pihak_2","perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","no_seri_akta_cerai")
         ->Join("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
         ->Join("perkara_pihak2", "perkara.perkara_id","=","perkara_pihak2.perkara_id")

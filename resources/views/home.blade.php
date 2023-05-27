@@ -36,7 +36,7 @@
                 </tr>
                 
                     <tr>
-                        <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th><th>No. Identitas</th><th>No. Telp.</th><th>Email</th>
+                        <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th><th>No. Identitas</th><th>No. Telp.</th><th>Pekerjaan</th>
                     </tr>
                     @foreach($para_pihak as $baris)
                         @if($baris->perkara_id == $row->perkara_id)
@@ -46,7 +46,7 @@
                                     @if($row_pihak_info->id == $baris->pihak_id)
                                         <td>{{$row_pihak_info->nomor_indentitas}}</td>
                                         <td>{{$row_pihak_info->telepon}}</td>
-                                        <td>{{$row_pihak_info->email}}</td>
+                                        <td>{{$row_pihak_info->pekerjaan}}</td>
                                     @endif
                                 @endforeach
                             </tr>
