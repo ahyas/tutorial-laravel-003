@@ -47,6 +47,10 @@
                                         <td>{{$row_pihak_info->nomor_indentitas}}</td>
                                         <td>{{$row_pihak_info->telepon}}</td>
                                         <td>{{$row_pihak_info->email}}</td>
+                                    @else
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     @endif
                                 @endforeach
                             </tr>
