@@ -39,8 +39,10 @@ class HomeController extends Controller
         ->union($pihak1)
         ->get(); 
 
-        
+        $pihak_info = DB::table("pihak")
+        ->orderBy("id","DESC")
+        ->get();
 
-        return view('home', compact("perkara", "para_pihak"));
+        return view('home', compact("perkara", "para_pihak","pihak_info"));
     }
 }

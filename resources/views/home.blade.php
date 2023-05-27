@@ -21,6 +21,7 @@
                             <th>Jenis perkara</th>
                             <th>Nomor perkara</th>
                             <th>Tahapan terakhir</th>
+                            <th></th>
                         </tr>
                         @foreach($perkara as $row)
                         <tr>
@@ -29,20 +30,27 @@
                             <td>{{$row->jenis_perkara_text}}</td>
                             <td>{{$row->nomor_perkara}}</td>
                             <td>{{$row->tahapan_terakhir_text}}</td>
+                            <td></td>
                         </tr>
                         
                             <tr>
-                                <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th>
+                                <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th><th>No. Identitas</th>
                             </tr>
                             @foreach($para_pihak as $baris)
                                 @if($baris->perkara_id == $row->perkara_id)
                                     <tr>
                                         <td></td><td>{{$baris->pihak_id}}</td><td>{{$baris->nama}}</td><td colspan="2">{{$baris->alamat}}</td>
+                                        <td>
+                                        @foreach($pihak_info as $row_pihak_info)
+                                            @if($row_pihak_info->id == $baris->pihak_id)
+                                                {{$row_pihak_info->nomor_indentitas}}
+                                            @endif
+                                        @endforeach
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
                         @endforeach
-                        
                     </table>
                 </div>
             </div>
