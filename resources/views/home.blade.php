@@ -12,7 +12,7 @@
                 </div>
             @endif
 
-            <table class="table table-striped border">
+            <table class="table table-striped border" border="1">
                 <tr>
                     <th>ID Perkara</th>
                     <th>Tanggal pendaftaran</th>
