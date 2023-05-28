@@ -19,9 +19,7 @@
                     <th>Jenis perkara</th>
                     <th>Nomor perkara</th>
                     <th>Tahapan terakhir</th>
-                    <th>No. Akta cerai</th>
-                    <th></th>
-                    <th></th>
+                    <th colspan="4">No. Akta cerai</th>
                 </tr>
                 @foreach($perkara as $row)
                 <tr>
@@ -30,20 +28,22 @@
                     <td>{{$row->jenis_perkara_text}}</td>
                     <td>{{$row->nomor_perkara}}</td>
                     <td>{{$row->tahapan_terakhir_text}}</td>
-                    <td>{{$row->nomor_akta_cerai}}</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="4">{{$row->nomor_akta_cerai}}</td>
                 </tr>
                 
                     <tr>
-                        <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th><th>No. Identitas</th><th>No. Telp.</th><th>Pekerjaan</th>
+                        <th></th><th>Pihak ID</th><th>Nama</th><th colspan="2">Alamat</th><th>Jenis kelamin</th><th>No. Identitas</th><th>No. Telp.</th><th>Pekerjaan</th>
                     </tr>
                     @foreach($para_pihak as $baris)
                         @if($baris->perkara_id == $row->perkara_id)
                             <tr>
-                                <td></td><td>{{$baris->pihak_id}}</td><td>{{$baris->nama}}</td><td colspan="2">{{$baris->alamat}}</td>
+                                <td></td>
+                                <td>{{$baris->pihak_id}}</td>
+                                <td>{{$baris->nama}}</td>
+                                <td colspan="2">{{$baris->alamat}}</td>
                                 @foreach($pihak_info as $row_pihak_info)
                                     @if($row_pihak_info->id == $baris->pihak_id)
+                                        <td>{{$row_pihak_info->jenis_kelamin}}</td>
                                         <td>{{$row_pihak_info->nomor_indentitas}}</td>
                                         <td>{{$row_pihak_info->telepon}}</td>
                                         <td>{{$row_pihak_info->pekerjaan}}</td>
