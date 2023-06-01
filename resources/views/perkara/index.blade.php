@@ -31,9 +31,9 @@
                         <td class="table-warning">{{$row->nomor_perkara}}</td>
                         <td class="table-warning">
                             @if($row->tahapan_terakhir_id == 19)
-                                <span class="badge bg-success text-dark">{{$row->tahapan_terakhir_text}}</span>
+                                <span class="badge rounded-pill bg-success">{{$row->tahapan_terakhir_text}}</span>
                             @else
-                                <span class="badge bg-warning text-dark">{{$row->tahapan_terakhir_text}}</span>
+                                <span class="badge rounded-pill bg-warning text-dark">{{$row->tahapan_terakhir_text}}</span>
                             @endif
                         </td>
                         <td class="table-warning" colspan="4">{{$row->nomor_akta_cerai}}</td>

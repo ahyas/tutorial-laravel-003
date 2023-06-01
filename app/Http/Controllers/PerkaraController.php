@@ -48,6 +48,18 @@ class PerkaraController extends Controller
     }
 
     public function pengajuan($id_pihak){
-        return view("perkara.pengajuan.index", compact("id_pihak"));
+        $pihak1 = DB::table("perkara_pihak1 AS H")
+        ->where("H.pihak_id",$id_pihak)
+        ->join("pihak AS B", "H.pihak_id","=","B.id")
+        ->select("B.tempat_lahir","B.tanggal_lahir","B.jenis_kelamin","B.nomor_indentitas","H.perkara_id","H.pihak_id","H.nama","H.alamat");
+
+        $pihak = DB::table("perkara_pihak2 AS H")
+        ->where("H.pihak_id",$id_pihak)
+        ->join("pihak AS B","H.pihak_id","=","B.id")
+        ->select("B.tempat_lahir","B.tanggal_lahir","B.jenis_kelamin","B.nomor_indentitas","H.perkara_id","H.pihak_id","H.nama","H.alamat")
+        ->union($pihak1)
+        ->first();
+
+        return view("perkara.pengajuan.index", compact("pihak"));
     }
 }
