@@ -31,7 +31,7 @@
                         <td class="table-warning">{{$row->nomor_perkara}}</td>
                         <td class="table-warning">
                             @if($row->tahapan_terakhir_id == 19)
-                                <span class="badge rounded-pill bg-success">{{$row->tahapan_terakhir_text}}</span>
+                                <span class="badge rounded-pill bg-success text-white">{{$row->tahapan_terakhir_text}}</span>
                             @else
                                 <span class="badge rounded-pill bg-warning text-dark">{{$row->tahapan_terakhir_text}}</span>
                             @endif
@@ -39,7 +39,7 @@
                         <td class="table-warning" colspan="4">{{$row->nomor_akta_cerai}}</td>
                     </tr>
                 <tr>
-                    <td class="table-warning" colspan="9">Detail para pihak</td>
+                    <td class="table-warning" colspan="9">Detail informasi para pihak</td>
                 </tr>
                 <tr>
                     <td colspan=9 class="table-warning">
@@ -50,7 +50,7 @@
                                 <th class="table-info">Alamat</th>
                                 <th class="table-info" style="width:100px">Jenis kelamin</th>
                                 <th class="table-info" style="width:100px">No. Identitas</th>
-                                <th class="table-info" style="width:120px">Status</th>
+                                <th class="table-info" style="width:250px">Status pengajuan data kependudukan</th>
                                 <!--<th class="table-info" style="width:80px">No. Telp.</th>
                                 <th class="table-info">Pekerjaan</th>-->
                             </tr>
@@ -58,11 +58,11 @@
                         @foreach($para_pihak as $baris)
                             @if($baris->perkara_id == $row->perkara_id)
                                 <tr>
-                                    <td class="table-success">{{$baris->pihak_id}}</td>
-                                    <td class="table-success">{{$baris->nama}}</td>
-                                    <td class="table-success">{{$baris->alamat}}</td>
                                     @foreach($pihak_info as $row_pihak_info)
                                         @if($row_pihak_info->id == $baris->pihak_id)
+                                        <td class="table-success">{{$row_pihak_info->id}}</td>
+                                        <td class="table-success">{{$row_pihak_info->nama}}</td>
+                                        <td class="table-success">{{$row_pihak_info->alamat}}</td>
                                             <td class="table-success">
                                                 @if($row_pihak_info->jenis_kelamin == 'L')
                                                     <span>Laki-laki</span>
@@ -71,7 +71,13 @@
                                                 @endif
                                             </td>
                                             <td class="table-success">{{$row_pihak_info->nomor_indentitas}}</td>
-                                            <td class="table-success"></td>
+                                            <td class="table-success">
+                                                @foreach($status_pengajuan as $row_status)
+                                                    @if($row_status->id == $row_pihak_info->status_pengajuan)
+                                                        <span class="badge rounded-pill bg-success text-white">{{$row_status->status}}</span>
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <!--<td class="table-success">{{$row_pihak_info->telepon}}</td>
                                             <td class="table-success">{{$row_pihak_info->pekerjaan}}</td>-->
                                         @endif
@@ -81,7 +87,7 @@
                                     <td colspan="7" style="padding-bottom:10px">
                                         @if(Auth::user()->role_id <> 1)
                                             @if($row->nomor_akta_cerai <> "")
-                                                <a href="{{route('perkara.pengajuan', ['id_pihak'=>$baris->pihak_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
+                                                <a href="{{route('perkara.pengajuan', ['id_pihak'=>$baris->pihak_id, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
                                             @else
                                                 <button class="btn btn-primary btn-sm" disabled>Ajukan perubahan data kependudukan</button>
                                             @endif
