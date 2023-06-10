@@ -80,9 +80,10 @@
             @endif
 
             <div class="content">
-                    <h1 style="line-height:0">Semar</h1>
+            <img src="{{asset('public/images/logo.png')}}" width="100" class="d-inline-block align-top" alt="">
+                    <h1 style="line-height:0;" >Semar</h1>
                     <p><b>Sistem Elektronik Manajemen Akta Cerai</b></p>
-                <div class="links">
+                <!--<div class="links">
                     <a href="#">Docs</a>
                     <a href="#">Laracasts</a>
                     <a href="#">News</a>
@@ -91,7 +92,7 @@
                     <a href="#">Forge</a>
                     <a href="#">Vapor</a>
                     <a href="#">GitHub</a>
-                </div>
+                </div>-->
             </div>
         </div>
     </body>

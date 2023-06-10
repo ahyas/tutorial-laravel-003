@@ -6,31 +6,22 @@
         <div class="card-header">Pengajuan perubahan data status perkwinan</div>
         <div class="card-body">
         <p>Pastikan seluruh data sudah lengkap untuk mengajukan perubahan data status perkawinan</p>
-        @if($pihak->status_pengajuan == 1)
-            <div class="alert alert-success" role="alert">
-                <b>Data ini sudah diajukan.</b>
-            </div>
-            <?php $btn_lengkapi = "disabled"; ?>
-            <?php $btn_kirim = "disabled"; ?>
-        @elseif($pihak->status_pengajuan == 2)
+        @if($pihak->status_pengajuan == 2)
             <div class="alert alert-info" role="alert">
                 <b>Data ini sedang diproses.</b>
             </div>
-            <?php $btn_lengkapi = "disabled"; ?>
-            <?php $btn_kirim = "disabled"; ?>
+            <?php $btn_proses = "disabled"; ?>
+            <?php $btn_selesai = ""; ?>
+        @elseif($pihak->status_pengajuan == 3)
+            <div class="alert alert-warning" role="alert">
+                <b>Data ini telah selesai diproses.</b>
+            </div>
+            <?php $btn_proses = "disabled"; ?>
+            <?php $btn_selesai = "disabled"; ?>
         @else
-            @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" )
-                <div class="alert alert-danger" role="alert">
-                    Ada data yang belum lengkap, silahkan lengkapi terlebih dahulu.
-                </div>
-                <?php $btn_lengkapi = ""; ?>
-                <?php $btn_kirim = "disabled"; ?>
-            @else
-                <?php $btn_lengkapi = ""; ?>
-                <?php $btn_kirim = ""; ?>
-            @endif
+            <?php $btn_proses = ""; ?>
+            <?php $btn_selesai = "disabled"; ?>
         @endif
-
         <table style="margin-bottom:15px">
             <tr>
                 <td align="left"><b>Nama :</b></td>
@@ -60,9 +51,9 @@
             </tr>
         </table>
         
-        <a class="btn btn-danger btn-sm" href="{{url('/perkara')}}">Batal</a>
-        <button class="btn btn-primary btn-success btn-sm lengkapi" <?php echo $btn_lengkapi; ?>>Lengkapi data</button>
-        <button class='btn btn-primary btn-primary btn-sm kirim' <?php echo $btn_kirim; ?>>Kirim</button>
+        <a class="btn btn-danger btn-sm" href="{{url('/permohonan')}}">Batal</a>
+        <button class='btn btn-primary btn-primary btn-sm proses' <?php echo $btn_proses; ?> >Proses</button>
+        <button class='btn btn-primary btn-success btn-sm selesai'<?php echo $btn_selesai; ?> >Selesai</button>
         </div>
     </div>
 </div>
@@ -71,22 +62,31 @@
 @push('scripts')
 <script type="text/javascript" >
     $(document).ready(function(){
-        $("body").on("click",".kirim", function(){
-            if(window.confirm("Apakah semua data sudah benar?")){
+        $("body").on("click",".proses", function(){
+            if(window.confirm("Apakah semua data telah sesuai?")){
                 $.ajax({
-                    url:"{{route('perkara.pengajuan.kirim', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}",
+                    url:"{{route('permohonan.pengajuan.proses', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}",
                     type:"GET",
-                    data:{status:1},
+                    data:{status:2},
                     success:function(data){
-                        window.location.href = "{{route('perkara.index')}}";
+                        window.location.href = "{{route('permohonan.index')}}";
                         //console.log("Kirim");
                     }
                 });
             }
         });
 
-        $("body").on("click",".lengkapi",function(){
-            window.location.href= "{{route('perkara.pengajuan.edit', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}";
+        $("body").on("click",".selesai",function(){
+            if(window.confirm("Apakah semua data telah sesuai?")){
+                $.ajax({
+                    url:"{{route('permohonan.pengajuan.selesai', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}",
+                    type:"GET",
+                    data:{status:3},
+                    success:function(data){
+                        window.location.href = "{{route('permohonan.index')}}";
+                    }
+                });
+            }
         });
     });
 </script>
