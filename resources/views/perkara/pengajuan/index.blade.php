@@ -18,6 +18,12 @@
             </div>
             <?php $btn_lengkapi = "disabled"; ?>
             <?php $btn_kirim = "disabled"; ?>
+        @elseif($pihak->status_pengajuan == 3)
+        <div class="alert alert-warning" role="alert">
+                <b>Data ini telah selesai diproses.</b>
+            </div>
+            <?php $btn_lengkapi = "disabled"; ?>
+            <?php $btn_kirim = "disabled"; ?>
         @else
             @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" )
                 <div class="alert alert-danger" role="alert">

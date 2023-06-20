@@ -37,8 +37,8 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{url('/home')}}">Home</a>
                             </li>
-                            <!--Login sebagai super admin-->
-                            @if(Auth::user()->role_id == 0)
+                            <!--Login sebagai super admin atau admin pta atau admin pa-->
+                            @if(Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                 <li class="nav-item">
                                     <a class="nav-link active" href="{{route('perkara.index')}}">Perkara</a>
                                 </li>
