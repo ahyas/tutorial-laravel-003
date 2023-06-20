@@ -11,8 +11,8 @@ class PermohonanController extends Controller
         $perkara = DB::table("perkara")
         ->where("perkara.tahapan_terakhir_id",19)
         ->select('perkara.perkara_id', 'perkara.tanggal_pendaftaran','perkara.tahapan_terakhir_id', 'perkara.jenis_perkara_text', 'perkara.nomor_perkara', 'perkara.tahapan_terakhir_text',"perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","no_seri_akta_cerai")
-        ->Join("perkara_akta_cerai","perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
-        ->groupBy("perkara.tahapan_terakhir_text","perkara.perkara_id","perkara.tanggal_pendaftaran","perkara.tahapan_terakhir_id",".perkara.jenis_perkara_text","perkara.nomor_perkara","perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","perkara_akta_cerai.no_seri_akta_cerai")
+        ->join("perkara_akta_cerai","perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
+        //->groupBy("perkara.tahapan_terakhir_text","perkara.perkara_id","perkara.tanggal_pendaftaran","perkara.tahapan_terakhir_id",".perkara.jenis_perkara_text","perkara.nomor_perkara","perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","perkara_akta_cerai.no_seri_akta_cerai")
         ->get();
 
         $pihak1 = DB::table("perkara_pihak1")
