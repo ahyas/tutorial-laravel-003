@@ -25,7 +25,7 @@
             <?php $btn_lengkapi = "disabled"; ?>
             <?php $btn_kirim = "disabled"; ?>
         @else
-            @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" )
+            @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
                 <div class="alert alert-danger" role="alert">
                     Ada data yang belum lengkap, silahkan lengkapi terlebih dahulu.
                 </div>
@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td align="left"><b>Jenis kelamin :</b></td>
-                <td>@if($pihak->jenis_kelamin == 'P') Perempuan @else Laki-laki @endif</td>
+                <td>@if($pihak->jenis_kelamin == 'P') Perempuan @elseif($pihak->jenis_kelamin == 'L') Laki-laki @endif</td>
             </tr>
         </table>
         <span>Data yang akan diubah adalah status perkawinan</span>

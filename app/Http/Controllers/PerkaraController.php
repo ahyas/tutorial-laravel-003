@@ -24,29 +24,64 @@ class PerkaraController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $perkara = DB::table("perkara")
-        ->select('perkara.perkara_id', 'perkara.tanggal_pendaftaran','perkara.tahapan_terakhir_id', 'perkara.jenis_perkara_text', 'perkara.nomor_perkara', 'perkara.tahapan_terakhir_text',"perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","no_seri_akta_cerai")
-        ->leftJoin("perkara_akta_cerai","perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
-        ->groupBy("perkara.tahapan_terakhir_text","perkara.perkara_id","perkara.tanggal_pendaftaran","perkara.tahapan_terakhir_id",".perkara.jenis_perkara_text","perkara.nomor_perkara","perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","perkara_akta_cerai.no_seri_akta_cerai")
-        //->orderBy("perkara.perkara_id","DESC")
+
+        $sql = DB::table("perkara")
+        ->where("perkara.tahapan_terakhir_id", 19)
+        ->select(
+            "perkara.perkara_id", 
+            "perkara_pihak1.nama AS nama_pihak1",
+            "perkara_pihak2.nama AS nama_pihak2", 
+            "perkara_pihak1.pihak_id AS id_pihak1",
+            "perkara_pihak2.pihak_id AS id_pihak2",  
+            "perkara_pihak1.alamat AS alamat_pihak1",
+            "perkara_pihak2.alamat AS alamat_pihak2",  
+            "perkara.tanggal_pendaftaran", 
+            "perkara.tahapan_terakhir_id", 
+            "perkara.jenis_perkara_text", 
+            "perkara.nomor_perkara", 
+            "perkara.tahapan_terakhir_text", 
+            "perkara_akta_cerai.nomor_akta_cerai", 
+            "perkara_akta_cerai.tgl_akta_cerai",
+            "perkara_akta_cerai.no_seri_akta_cerai",
+            "c.jenis_kelamin AS jenis_kelamin1", 
+            "d.jenis_kelamin AS jenis_kelamin2", 
+            "c.nomor_indentitas AS no_identitas1", 
+            "d.nomor_indentitas AS no_identitas2", 
+            "a.status AS status_pengajuan1", 
+            "b.status AS status_pengajuan2",
+            "a.id AS id_status1", 
+            "b.id AS id_status2",
+            "e.jenis_kelamin AS jenis_kelamin1",
+            "f.jenis_kelamin AS jenis_kelamin2"
+        )
+        ->leftJoin("perkara_akta_cerai", "perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
+        ->join("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
+        ->join("perkara_pihak2","perkara.perkara_id", "=", "perkara_pihak2.perkara_id")
+        ->join("pihak AS c", "perkara_pihak1.pihak_id", "=", "c.id")
+        ->join("pihak AS d", "perkara_pihak2.pihak_id", "=", "d.id")
+        ->leftJoin("status_pengajuan AS a", "c.status_pengajuan", "=", "a.id")
+        ->leftJoin("status_pengajuan AS b", "d.status_pengajuan", "=", "b.id")
+        ->leftJoin("jenis_kelamin AS e", "c.jenis_kelamin", "=" ,"e.kode")
+        ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
         ->get();
 
-        $pihak1 = DB::table("perkara_pihak1")
-        ->select("perkara_pihak1.perkara_id","perkara_pihak1.pihak_id");
+        return view('perkara.index', compact("sql"));
+    }
 
-        $para_pihak = DB::table("perkara_pihak2")
-        ->select("perkara_pihak2.perkara_id","perkara_pihak2.pihak_id")
-        ->union($pihak1)
-        ->get(); 
+    public function test_query(){
+        
 
-        $pihak_info = DB::table("pihak")
-        ->orderBy("id","DESC")
+        $sql = DB::table("perkara")
+        ->where("perkara.tahapan_terakhir_id", 19)
+        ->select("perkara.perkara_id", "perkara_pihak2.nama AS nama_pihak2 AS id_pihak2", "perkara_pihak1.pihak_id AS id_pihak1", "perkara_pihak1.nama AS nama_pihak1", "perkara_pihak2.pihak_id", "perkara.tanggal_pendaftaran", "perkara.tahapan_terakhir_id", "perkara.jenis_perkara_text", "perkara.nomor_perkara", "perkara.tahapan_terakhir_text", "perkara_akta_cerai.nomor_akta_cerai", "perkara_akta_cerai.tgl_akta_cerai", "perkara_akta_cerai.no_seri_akta_cerai")
+        ->leftJoin("perkara_akta_cerai", "perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
+        ->join("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
+        ->join("perkara_pihak2","perkara.perkara_id", "=", "perkara_pihak2.perkara_id")
         ->get();
 
-        $status_pengajuan = DB::table("status_pengajuan")
-        ->get();
+        $test = "abc";
 
-        return view('perkara.index', compact("perkara", "para_pihak","pihak_info","status_pengajuan"));
+        return view("test.index", compact("sql","test"));
     }
 
     public function pengajuan($id_perkara, $id_pihak){

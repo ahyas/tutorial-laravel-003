@@ -23,9 +23,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>Jenis Kelamin</b></label>
-                <select class="form-control">
-                    <option value="L" <?php if($pihak->jenis_kelamin=='L'){echo 'selected'; }else{echo'';}?>>Laki-laki</option>
-                    <option value="P" <?php if($pihak->jenis_kelamin=='P'){echo 'selected'; }else{echo'';}?>>Perempuan</option>
+                <select class="form-control" name="jenis_kelamin">
+                    <option value="0">Pilih jenis kelamin</option>
+                    <option value="L" <?php if($pihak->jenis_kelamin=='L'){echo 'selected'; }?>>Laki-laki</option>
+                    <option value="P" <?php if($pihak->jenis_kelamin=='P'){echo 'selected'; }?>>Perempuan</option>
                 </select>
             </div>
             <a class="btn btn-danger btn-sm" href="{{URL::previous()}}">Batal</a> <button type="submit" class="btn btn-primary btn-sm">Update</button>

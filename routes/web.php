@@ -36,4 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}", "PermohonanController@pengajuan")->name("permohonan.pengajuan");
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/proses", "PermohonanController@proses")->name("permohonan.pengajuan.proses");
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/selesai", "PermohonanController@selesai")->name("permohonan.pengajuan.selesai");
+
+    Route::get("/test_query", "PerkaraController@test_query");
 });

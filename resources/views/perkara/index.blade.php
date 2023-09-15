@@ -12,7 +12,7 @@
                 </div>
             @endif
             <div style="overflow-x:auto;">
-                @foreach($perkara as $row)
+                @foreach($sql as $row)
                 <table class="table table-borderless table-sm" style="font-size:13px;">
                 <thead class="thead-dark">
                     <tr>
@@ -29,13 +29,7 @@
                         <td class="table-warning">{{$row->tanggal_pendaftaran}}</td>
                         <td class="table-warning">{{$row->jenis_perkara_text}}</td>
                         <td class="table-warning">{{$row->nomor_perkara}}</td>
-                        <td class="table-warning">
-                            @if($row->tahapan_terakhir_id == 19)
-                                <span class="badge rounded-pill bg-success text-white">{{$row->tahapan_terakhir_text}}</span>
-                            @else
-                                <span class="badge rounded-pill bg-warning text-dark">{{$row->tahapan_terakhir_text}}</span>
-                            @endif
-                        </td>
+                        <td class="table-warning">{{$row->tahapan_terakhir_text}}</td>
                         <td class="table-warning" colspan="4">{{$row->nomor_akta_cerai}}</td>
                     </tr>
                 <tr>
@@ -54,52 +48,44 @@
                                 <!--<th class="table-info" style="width:80px">No. Telp.</th>
                                 <th class="table-info">Pekerjaan</th>-->
                             </tr>
-                        
-                        @foreach($para_pihak as $baris)
-                            @if($baris->perkara_id == $row->perkara_id)
-                                    @foreach($pihak_info as $row_pihak_info)
-                                        @if($row_pihak_info->id == $baris->pihak_id)
-                                        <tr>
-                                            <td class="table-success">{{$row_pihak_info->id}}</td>
-                                            <td class="table-success">{{$row_pihak_info->nama}}</td>
-                                            <td class="table-success">{{$row_pihak_info->alamat}}</td>
-                                                <td class="table-success">
-                                                    @if($row_pihak_info->jenis_kelamin == 'L')
-                                                        <span>Laki-laki</span>
-                                                    @else
-                                                        <span>Perempuan</span>
-                                                    @endif
-                                                </td>
-                                                <td class="table-success">{{$row_pihak_info->nomor_indentitas}}</td>
-                                                <td class="table-success">
-                                                    @foreach($status_pengajuan as $row_status)
-                                                        @if($row_status->id == $row_pihak_info->status_pengajuan)
-                                                            @if($row_pihak_info->status_pengajuan == 1)
-                                                                <span class="badge rounded-pill bg-success text-white">{{$row_status->status}}</span>
-                                                            @else
-                                                                <span class="badge rounded-pill bg-primary text-white">{{$row_status->status}}</span>
-                                                            @endif
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            <!--<td class="table-success">{{$row_pihak_info->telepon}}</td>
-                                            <td class="table-success">{{$row_pihak_info->pekerjaan}}</td>-->
-                                            </tr>
-                                            <tr class="table-success">
-                                                <td colspan="7" style="padding-bottom:10px">
-                                                @if(Auth::user()->role_id <> 1)
-                                                    @if($row->nomor_akta_cerai <> "")
-                                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$baris->pihak_id, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
-                                                    @else
-                                                        <button class="btn btn-primary btn-sm" disabled>Ajukan perubahan data kependudukan</button>
-                                                    @endif
-                                                @endif
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                            @endif
-                        @endforeach
+                            <tr>
+                                <td>{{$row->id_pihak1}}</td>
+                                <td>{{$row->nama_pihak1}}</td>
+                                <td>{{$row->alamat_pihak1}}</td>
+                                <td>{{$row->jenis_kelamin1}}</td>
+                                <td>{{$row->no_identitas1}}</td>
+                                <td>
+                                @if($row->id_status1 == 1)
+                                    <span class="badge rounded-pill bg-success text-white">{{$row->status_pengajuan1}}</span>
+                                @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    @if(Auth::user()->role_id <> 1)
+                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak1, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{$row->id_pihak2}}</td>
+                                <td>{{$row->nama_pihak2}}</td>
+                                <td>{{$row->alamat_pihak2}}</td>
+                                <td>{{$row->jenis_kelamin2}}</td>
+                                <td>{{$row->no_identitas2}}</td>
+                                <td>
+                                    @if($row->id_status2 == 1)
+                                        <span class="badge rounded-pill bg-success text-white">{{$row->status_pengajuan2}}</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    @if(Auth::user()->role_id <> 1)
+                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak2, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
+                                    @endif
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
