@@ -21,22 +21,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $rules = [
-            'username'              => 'required|string',
-            'password'              => 'required|string'
-        ];
- 
-        $messages = [
-            'username.required'        => 'Username wajib diisi',
-            'password.required'     => 'Password wajib diisi',
-            'password.string'       => 'Password harus berupa string'
-        ];
- 
-        $validator = Validator::make($request->all(), $rules, $messages);
- 
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput($request->all);
-        }
  
         $data = [
             'username'  => $request->input('username'),
@@ -59,7 +43,7 @@ class AuthController extends Controller
         } else { // false
  
             //Login Fail
-            Session::flash('error', 'Username atau password salah');
+            Session::flash('errors', 'Username atau password salah');
             return redirect()->route('login');
         }
  

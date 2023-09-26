@@ -8,7 +8,14 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    
+                @if(session()->has('errors'))
+                    <div class="alert alert-danger   alert-dismissible fade show" role="alert">
+                        {{ session('errors') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -16,13 +23,8 @@
                             <label for="username" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="username" type="text" class="form-control" name="username" required autofocus>
+                                
                             </div>
                         </div>
 
@@ -30,13 +32,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control" name="password" required >
+                                
                             </div>
                         </div>
 
@@ -48,6 +45,7 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
+                                    
                                 </div>
                             </div>
                         </div>
