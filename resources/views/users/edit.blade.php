@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="card">
-        <div class="card-header">Pengajuan perubahan data kependudukan</div>
+        <div class="card-header">Pembaharuan data user</div>
 
         <div class="card-body">
         

@@ -26,7 +26,7 @@
         
         <table style="margin-bottom:15px">
             <tr>
-                <td align="right"><b>Nama</b></td>
+                <td align="right" width="120px"><b>Nama</b></td>
                 <td width:5px>:</td>
                 <td>{{$pihak->nama}}</td>
             </tr>

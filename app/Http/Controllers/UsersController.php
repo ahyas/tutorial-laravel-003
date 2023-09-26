@@ -48,7 +48,9 @@ class UsersController extends Controller
 
         $status = DB::table("status")->get();
 
-        $roles = DB::table("roles")->get();
+        $roles = DB::table("roles")
+        ->where("id","!=", 0)
+        ->get();
 
         return view("users.edit", compact("table", "status","roles"));
     }
@@ -110,7 +112,5 @@ class UsersController extends Controller
 
         Session::flash('success', 'Reset Username/password berhasil');
         return redirect()->route("users.detail", ['id_user'=>$id_user]);
-
-        
     }
 }

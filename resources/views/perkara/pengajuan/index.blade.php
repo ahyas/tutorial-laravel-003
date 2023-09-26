@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-header">Pengajuan Pemutakhiran Data Kependudukan</div>
         <div class="card-body">
-        <p>Pastikan seluruh data sudah lengkap untuk mengajukan perubahan data status perkawinan</p>
+        
         @switch($pihak->status_pengajuan)
             @case(1)
                 <div class="alert alert-success" role="alert">
@@ -23,6 +23,14 @@
                 <?php $btn_kirim = "disabled"; ?>
             @break
 
+            @case(3)
+                <div class="alert alert-primary" role="alert">
+                    <b>Data ini telah disetujui.</b>
+                </div>
+                <?php $btn_lengkapi = "disabled"; ?>
+                <?php $btn_kirim = "disabled"; ?>
+            @break
+
             @default
                 @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
                     <div class="alert alert-danger" role="alert">
@@ -35,10 +43,10 @@
                     <?php $btn_kirim = ""; ?>
                 @endif
         @endswitch
-
+        <p>Pastikan seluruh data sudah lengkap untuk mengajukan perubahan data status perkawinan</p>
         <table style="margin-bottom:15px">
             <tr>
-                <td align="right"><b>Nama</b></td>
+                <td align="right" width="120px"><b>Nama</b></td>
                 <td width:5px>:</td>
                 <td>{{$pihak->nama}}</td>
             </tr>
