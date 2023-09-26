@@ -31,7 +31,48 @@ class PermohonanController extends Controller
         $status_pengajuan = DB::table("status_pengajuan")
         ->get();
 
-        return view('permohonan.index', compact("perkara", "para_pihak","pihak_info","status_pengajuan"));
+        $sql = DB::table("perkara")
+        ->where("perkara.tahapan_terakhir_id", 19)
+        ->whereNotNull("c.status_pengajuan")
+        ->select(
+            "perkara.perkara_id", 
+            "perkara_pihak1.nama AS nama_pihak1",
+            "perkara_pihak2.nama AS nama_pihak2", 
+            "perkara_pihak1.pihak_id AS id_pihak1",
+            "perkara_pihak2.pihak_id AS id_pihak2",  
+            "perkara_pihak1.alamat AS alamat_pihak1",
+            "perkara_pihak2.alamat AS alamat_pihak2",  
+            "perkara.tanggal_pendaftaran", 
+            "perkara.tahapan_terakhir_id", 
+            "perkara.jenis_perkara_text", 
+            "perkara.nomor_perkara", 
+            "perkara.tahapan_terakhir_text", 
+            "perkara_akta_cerai.nomor_akta_cerai", 
+            "perkara_akta_cerai.tgl_akta_cerai",
+            "perkara_akta_cerai.no_seri_akta_cerai",
+            "c.jenis_kelamin AS jenis_kelamin1", 
+            "d.jenis_kelamin AS jenis_kelamin2", 
+            "c.nomor_indentitas AS no_identitas1", 
+            "d.nomor_indentitas AS no_identitas2", 
+            "a.status AS status_pengajuan1", 
+            "b.status AS status_pengajuan2",
+            "a.id AS id_status1", 
+            "b.id AS id_status2",
+            "e.jenis_kelamin AS jenis_kelamin1",
+            "f.jenis_kelamin AS jenis_kelamin2"
+        )
+        ->join("perkara_akta_cerai", "perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
+        ->join("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
+        ->join("perkara_pihak2","perkara.perkara_id", "=", "perkara_pihak2.perkara_id")
+        ->join("pihak AS c", "perkara_pihak1.pihak_id", "=", "c.id")
+        ->join("pihak AS d", "perkara_pihak2.pihak_id", "=", "d.id")
+        ->leftJoin("status_pengajuan AS a", "c.status_pengajuan", "=", "a.id")
+        ->leftJoin("status_pengajuan AS b", "d.status_pengajuan", "=", "b.id")
+        ->leftJoin("jenis_kelamin AS e", "c.jenis_kelamin", "=" ,"e.kode")
+        ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
+        ->get();
+
+        return view('permohonan.index', compact("perkara", "para_pihak","pihak_info","status_pengajuan", "sql"));
     }
 
     public function pengajuan($id_perkara, $id_pihak){

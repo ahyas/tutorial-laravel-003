@@ -37,5 +37,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/proses", "PermohonanController@proses")->name("permohonan.pengajuan.proses");
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/selesai", "PermohonanController@selesai")->name("permohonan.pengajuan.selesai");
 
+    Route::get("/users", "UsersController@index")->name("users.index");
+    Route::get("/users/add", "UsersController@add")->name("users.add");
+    Route::get("/users/{id_user}/detail", "UsersController@detail")->name("users.detail");
+    Route::get("/users/{id_user}/edit", "UsersController@edit")->name("users.edit");
+    Route::post("/users/{id_user}/update", "UsersController@update")->name("users.update");
+    Route::get("/users/{id_user}/delete", "UsersController@delete")->name("users.delete");
+    Route::get("/users/{id_user}/reset", "UsersController@reset")->name("users.reset");
+    Route::post("/users/{id_user}/update_password", "UsersController@update_password")->name("users.update_password");
+
     Route::get("/test_query", "PerkaraController@test_query");
 });

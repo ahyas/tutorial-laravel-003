@@ -3,40 +3,46 @@
 @section('content')
 <div class="container-fluid">
     <div class="card">
-        <div class="card-header">Pengajuan perubahan data status perkwinan</div>
+        <div class="card-header">Pengajuan Pemutakhiran Data Kependudukan</div>
         <div class="card-body">
         <p>Pastikan seluruh data sudah lengkap untuk mengajukan perubahan data status perkawinan</p>
-        @if($pihak->status_pengajuan == 2)
-            <div class="alert alert-info" role="alert">
-                <b>Data ini sedang diproses.</b>
-            </div>
-            <?php $btn_proses = "disabled"; ?>
-            <?php $btn_selesai = ""; ?>
-        @elseif($pihak->status_pengajuan == 3)
-            <div class="alert alert-warning" role="alert">
-                <b>Data ini telah selesai diproses.</b>
-            </div>
-            <?php $btn_proses = "disabled"; ?>
-            <?php $btn_selesai = "disabled"; ?>
-        @else
-            <?php $btn_proses = ""; ?>
-            <?php $btn_selesai = "disabled"; ?>
-        @endif
+
+        @switch($pihak->status_pengajuan)
+            @case(2)
+                <?php $btn_proses = "disabled"; ?>
+                <?php $btn_selesai = ""; ?>
+            @break
+
+            @case(3)
+                <?php $btn_proses = "disabled"; ?>
+                <?php $btn_selesai = "disabled"; ?>
+            @break
+
+            @default
+                <?php $btn_proses = ""; ?>
+                <?php $btn_selesai = "disabled"; ?>
+            
+        @endswitch
+        
         <table style="margin-bottom:15px">
             <tr>
-                <td align="left"><b>Nama :</b></td>
+                <td align="right"><b>Nama</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->nama}}</td>
             </tr>
             <tr>
-                <td align="left"><b>Alamat :</b></td>
+                <td align="right"><b>Alamat</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->alamat}}</td>
             </tr>
             <tr>
-                <td align="left"><b>NIK :</b></td>
+                <td align="right"><b>NIK</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->nomor_indentitas}}</td>
             </tr>
             <tr>
-                <td align="left"><b>Jenis kelamin :</b></td>
+                <td align="right"><b>Jenis kelamin</b></td>
+                <td width:5px>:</td>
                 <td>@if($pihak->jenis_kelamin == 'P') Perempuan @else Laki-laki @endif</td>
             </tr>
         </table>
@@ -53,7 +59,7 @@
         
         <a class="btn btn-danger btn-sm" href="{{url('/permohonan')}}">Batal</a>
         <button class='btn btn-primary btn-primary btn-sm proses' <?php echo $btn_proses; ?> >Proses</button>
-        <button class='btn btn-primary btn-success btn-sm selesai'<?php echo $btn_selesai; ?> >Selesai</button>
+        <button class='btn btn-primary btn-success btn-sm selesai' <?php echo $btn_selesai; ?> >Selesai</button>
         </div>
     </div>
 </div>

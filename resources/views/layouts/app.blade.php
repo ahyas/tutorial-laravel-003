@@ -23,10 +23,17 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
+                @if(Auth::check())
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     <img src="{{asset('public/images/logo.png')}}" width="30" class="d-inline-block align-top" alt="">
                     <b>Semar</b>
                 </a>
+                @else
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{asset('public/images/logo.png')}}" width="30" class="d-inline-block align-top" alt="">
+                    <b>Semar</b>
+                </a>
+                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,6 +44,11 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{url('/home')}}">Home</a>
                             </li>
+                            @if(Auth::user()->role_id == 0)
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{{route('users.index')}}">Manajemen user</a>
+                                </li>
+                            @endif
                             <!--Login sebagai super admin atau admin pta atau admin pa-->
                             @if(Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                 <li class="nav-item">
@@ -67,10 +79,13 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }}
+                                    {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->role_id <> 0)
+                                        <a class="dropdown-item" href="{{route('users.detail',['id_user'=>Auth::user()->id])}}">Profil</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

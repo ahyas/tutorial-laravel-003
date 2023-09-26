@@ -11,6 +11,7 @@
                     {{ session('status') }}
                 </div>
             @endif
+            <p>Daftar putusan perkara</p>
             <div style="overflow-x:auto;">
                 @foreach($sql as $row)
                 <table class="table table-borderless table-sm" style="font-size:13px;">
@@ -55,15 +56,28 @@
                                 <td>{{$row->jenis_kelamin1}}</td>
                                 <td>{{$row->no_identitas1}}</td>
                                 <td>
-                                @if($row->id_status1 == 1)
-                                    <span class="badge rounded-pill bg-success text-white">{{$row->status_pengajuan1}}</span>
-                                @endif
+                                @switch($row->id_status1)
+                                    @case(1)
+                                        <span class="badge rounded-pill bg-success text-white">{{$row->status_pengajuan1}}</span>
+                                    @break
+
+                                    @case(2)
+                                        <span class="badge rounded-pill bg-primary text-white">{{$row->status_pengajuan1}}</span>
+                                    @break
+
+                                    @case(3)
+                                        <span class="badge rounded-pill bg-danger text-white">{{$row->status_pengajuan1}}</span>
+                                    @break
+
+                                    @default
+                                        <span></span>
+                                @endswitch
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="6">
                                     @if(Auth::user()->role_id <> 1)
-                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak1, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
+                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak1, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan Pemutakhiran Data Kependudukan</a>
                                     @endif
                                 </td>
                             </tr>
@@ -74,15 +88,28 @@
                                 <td>{{$row->jenis_kelamin2}}</td>
                                 <td>{{$row->no_identitas2}}</td>
                                 <td>
-                                    @if($row->id_status2 == 1)
+                                @switch($row->id_status2)
+                                    @case(1)
                                         <span class="badge rounded-pill bg-success text-white">{{$row->status_pengajuan2}}</span>
-                                    @endif
+                                    @break
+
+                                    @case(2)
+                                        <span class="badge rounded-pill bg-primary text-white">{{$row->status_pengajuan2}}</span>
+                                    @break
+
+                                    @case(3)
+                                        <span class="badge rounded-pill bg-danger text-white">{{$row->status_pengajuan2}}</span>
+                                    @break
+
+                                    @default
+                                        <span></span>
+                                @endswitch
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="6">
                                     @if(Auth::user()->role_id <> 1)
-                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak2, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan perubahan data kependudukan</a>
+                                        <a href="{{route('perkara.pengajuan', ['id_pihak'=>$row->id_pihak2, 'id_perkara'=>$row->perkara_id])}}" class="btn btn-primary btn-sm">Ajukan Pemutakhiran Data Kependudukan</a>
                                     @endif
                                 </td>
                             </tr>

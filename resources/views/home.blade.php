@@ -6,7 +6,7 @@
         <div class="card-header">{{ __('Dashboard') }}</div>
 
         <div class="card-body">
-            <p>Perkara</p>
+            <p>Selamat datang, {{Auth::user()->name}}</p>
         </div>
     </div>
 </div>

@@ -45,9 +45,16 @@ class AuthController extends Controller
  
         Auth::attempt($data);
  
-        if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
-            //Login Success
-            return redirect()->route('home');
+        if (Auth::check()) { // Bila user berhasil login
+            //Bila status usesr = non aktif arahkan kembali ke halaman selamat datang
+            if(Auth::user()->status == 2){
+                Auth::logout();
+                Session::flash('errors', 'Status anda tidak aktif. Silahkan hubungi administrator');
+                return redirect()->route('welcome');
+            }else{
+                return redirect()->route('home');
+            }
+            
  
         } else { // false
  
@@ -60,7 +67,12 @@ class AuthController extends Controller
 
     public function showFormRegister()
     {
-        return view('auth/register');
+        if(Auth::user()->role_id == 0){
+            return view('auth/register');
+        }else{
+            return redirect()->route("home");
+        }
+        
     }
  
     public function register(Request $request)
@@ -95,8 +107,8 @@ class AuthController extends Controller
         ]);
  
         if($simpan){
-            Session::flash('success', 'Register berhasil! Silahkan login untuk mengakses data');
-            return redirect()->route('login');
+            Session::flash('success', 'Register user berhasil!');
+            return redirect()->route('users.index');
         } else {
             Session::flash('errors', ['' => 'Register gagal! Silahkan ulangi beberapa saat lagi']);
             return redirect()->route('register');

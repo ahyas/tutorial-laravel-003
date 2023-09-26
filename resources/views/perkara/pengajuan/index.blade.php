@@ -3,55 +3,58 @@
 @section('content')
 <div class="container-fluid">
     <div class="card">
-        <div class="card-header">Pengajuan perubahan data status perkwinan</div>
+        <div class="card-header">Pengajuan Pemutakhiran Data Kependudukan</div>
         <div class="card-body">
         <p>Pastikan seluruh data sudah lengkap untuk mengajukan perubahan data status perkawinan</p>
-        @if($pihak->status_pengajuan == 1)
-            <div class="alert alert-success" role="alert">
-                <b>Data ini sudah diajukan.</b>
-            </div>
-            <?php $btn_lengkapi = "disabled"; ?>
-            <?php $btn_kirim = "disabled"; ?>
-        @elseif($pihak->status_pengajuan == 2)
-            <div class="alert alert-info" role="alert">
-                <b>Data ini sedang diproses.</b>
-            </div>
-            <?php $btn_lengkapi = "disabled"; ?>
-            <?php $btn_kirim = "disabled"; ?>
-        @elseif($pihak->status_pengajuan == 3)
-        <div class="alert alert-warning" role="alert">
-                <b>Data ini telah selesai diproses.</b>
-            </div>
-            <?php $btn_lengkapi = "disabled"; ?>
-            <?php $btn_kirim = "disabled"; ?>
-        @else
-            @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
-                <div class="alert alert-danger" role="alert">
-                    Ada data yang belum lengkap, silahkan lengkapi terlebih dahulu.
+        @switch($pihak->status_pengajuan)
+            @case(1)
+                <div class="alert alert-success" role="alert">
+                    <b>Data ini sudah diajukan.</b>
                 </div>
-                <?php $btn_lengkapi = ""; ?>
+                <?php $btn_lengkapi = "disabled"; ?>
                 <?php $btn_kirim = "disabled"; ?>
-            @else
-                <?php $btn_lengkapi = ""; ?>
-                <?php $btn_kirim = ""; ?>
-            @endif
-        @endif
+            @break
+
+            @case(2)
+                <div class="alert alert-info" role="alert">
+                    <b>Data ini sedang diproses.</b>
+                </div>
+                <?php $btn_lengkapi = "disabled"; ?>
+                <?php $btn_kirim = "disabled"; ?>
+            @break
+
+            @default
+                @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
+                    <div class="alert alert-danger" role="alert">
+                        Ada data yang belum lengkap, silahkan lengkapi terlebih dahulu.
+                    </div>
+                    <?php $btn_lengkapi = ""; ?>
+                    <?php $btn_kirim = "disabled"; ?>
+                @else
+                    <?php $btn_lengkapi = ""; ?>
+                    <?php $btn_kirim = ""; ?>
+                @endif
+        @endswitch
 
         <table style="margin-bottom:15px">
             <tr>
-                <td align="left"><b>Nama :</b></td>
+                <td align="right"><b>Nama</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->nama}}</td>
             </tr>
             <tr>
-                <td align="left"><b>Alamat :</b></td>
+                <td align="right"><b>Alamat</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->alamat}}</td>
             </tr>
             <tr>
-                <td align="left"><b>NIK :</b></td>
+                <td align="right"><b>NIK</b></td>
+                <td width:5px>:</td>
                 <td>{{$pihak->nomor_indentitas}}</td>
             </tr>
             <tr>
-                <td align="left"><b>Jenis kelamin :</b></td>
+                <td align="right"><b>Jenis kelamin</b></td>
+                <td width:5px>:</td>
                 <td>@if($pihak->jenis_kelamin == 'P') Perempuan @elseif($pihak->jenis_kelamin == 'L') Laki-laki @endif</td>
             </tr>
         </table>
