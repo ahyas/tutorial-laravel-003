@@ -28,7 +28,22 @@
                 @foreach($table as $row)
                     <tr>
                         <td>{{$row->name}}</td>
-                        <td>{{$row->role}}</td>
+                        <td>
+
+                            @switch($row->id_role)
+                                @case(1)
+                                    <span class="badge rounded-pill bg-primary text-white">{{$row->role}} </span>
+                                @break
+                                @case(2)
+                                    <span class="badge rounded-pill bg-success text-white">{{$row->role}}</span>
+                                @break
+                                @case(3)
+                                    <span class="badge rounded-pill bg-warning">{{$row->role}}</span>
+                                @break
+                                @default
+                                <span class="badge rounded-pill bg-danger text-white">{{$row->role}}</span>
+                            @endswitch
+                        </td>
                         <td>{{$row->email}}</td>
                         <td>{{$row->no_telp}}</td>
                         <td>

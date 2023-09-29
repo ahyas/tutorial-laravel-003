@@ -9,6 +9,7 @@
         
         <form action="{{route('users.update_password', ['id_user'=>$table->id_user])}}" method="POST">
         {{ csrf_field() }}
+        @if(Auth::user()->role_id <> 0)
             <div class="mb-3">
                 <label class="form-label"><b>Password Lama</b></label>
                 <input type="password" class="form-control" name="current_pass" placeholder="Password Lama" value="">
@@ -16,6 +17,7 @@
                     <span class="text-danger">{{$errors->first('current_pass')}}</span>
                 @endif
             </div>
+        @endif
             <div class="mb-3">
                 <label class="form-label"><b>Password Baru</b></label>
                 <input type="password" class="form-control" name="new_pass" placeholder="Password baru" value="">

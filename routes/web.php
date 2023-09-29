@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/users/{id_user}/delete", "UsersController@delete")->name("users.delete");
     Route::get("/users/{id_user}/reset", "UsersController@reset")->name("users.reset");
     Route::post("/users/{id_user}/update_password", "UsersController@update_password")->name("users.update_password");
+    
+    Route::get("/satker_induk/{id_role}", "SatkerController@satker_induk")->name("satker_induk");
+    Route::get("/satker_anak/{id_induk}", "SatkerController@satker_anak")->name("satker_anak");
 
     Route::get("/test_query", "PerkaraController@test_query");
 });

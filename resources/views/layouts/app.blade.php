@@ -48,6 +48,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" href="{{route('users.index')}}">Manajemen user</a>
                                 </li>
+                                <!--<li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manajemen Satker
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </li>-->
                             @endif
                             <!--Login sebagai super admin atau admin pta atau admin pa-->
                             @if(Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)

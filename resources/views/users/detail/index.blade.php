@@ -40,20 +40,17 @@
                     <td>:</td>
                     <td>
                         @switch($table->id_role)
-                            @case(0)
-                                <span class="badge rounded-pill bg-primary text-white">{{$table->role}}</span>
-                            @break
 
                             @case(1)
                                 <span class="badge rounded-pill bg-primary text-white">{{$table->role}}</span>
                             @break
 
                             @case(2)
-                                <span class="badge rounded-pill bg-warning">{{$table->role}}</span>
+                                <span class="badge rounded-pill bg-success text-white">{{$table->role}}</span>
                             @break
 
                             @case(3)
-                                <span class="badge rounded-pill bg-success text-white">{{$table->role}}</span>
+                                <span class="badge rounded-pill bg-warning ">{{$table->role}}</span>
                             @break
 
                             @default
@@ -65,14 +62,34 @@
                     </td>
                 </tr>
                 <tr>
+                    <td align="right"><b>Satker Induk</b></td>
+                    <td>:</td>
+                    <td>{{$table->satker_induk=="" ? "-":$table->satker_induk}}</td>
+                </tr>
+                <tr>
+                    <td align="right"><b>Satker Anak</b></td>
+                    <td>:</td>
+                    <td>{{$table->satker_anak=="" ? "-": $table->satker_anak}}</td>
+                </tr>
+                <tr>
                     <td align="right"><b>Status</b></td>
                     <td>:</td>
-                    <td>{{$table->status}}</td>
+                    <td>
+                    @if($table->id_status == 1)
+                                <span class="badge rounded-pill bg-success text-white">{{$table->status}}</span>
+                            @else
+                                <span class="badge rounded-pill bg-danger text-white">{{$table->status}}</span>
+                            @endif
+                    </td>
                 </tr>
             </table>
-            
+            @if($table->id_status == 2)
+                <?php $disabled = 'disabled'; ?>  
+            @else
+            <?php $disabled = ''; ?>
+            @endif
             <a class="btn btn-primary btn-sm" href="{{route('users.edit', ['id_user'=>$table->id_user])}}">Ubah</a>
-            <a class="btn btn-success btn-sm" href="{{route('users.reset', ['id_user'=>$table->id_user])}}">Reset password</a>
+            <a class="btn btn-success btn-sm {{$disabled}}" href="{{route('users.reset', ['id_user'=>$table->id_user])}}">Reset password</a>
             @if(Auth::user()->role_id == 0 )
              <button class="btn btn-danger btn-sm hapus" >Hapus</button>
             @endif 
