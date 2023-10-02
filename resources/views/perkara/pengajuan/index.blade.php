@@ -32,7 +32,7 @@
             @break
 
             @default
-                @if($pihak->alamat == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
+                @if($pihak->alamat == "" || $pihak->telepon == "" || $pihak->nama == "" || $pihak->nomor_indentitas == "" || $pihak->jenis_kelamin == "")
                     <div class="alert alert-danger" role="alert">
                         Ada data yang belum lengkap, silahkan lengkapi terlebih dahulu.
                     </div>
@@ -61,6 +61,11 @@
                 <td>{{$pihak->nomor_indentitas}}</td>
             </tr>
             <tr>
+                <td align="right"><b>Nomor Telp.</b></td>
+                <td width:5px>:</td>
+                <td>{{$pihak->telepon}}</td>
+            </tr>
+            <tr>
                 <td align="right"><b>Jenis kelamin</b></td>
                 <td width:5px>:</td>
                 <td>@if($pihak->jenis_kelamin == 'P') Perempuan @elseif($pihak->jenis_kelamin == 'L') Laki-laki @endif</td>
@@ -79,7 +84,7 @@
         
         <a class="btn btn-danger btn-sm" href="{{url('/perkara')}}">Batal</a>
         <button class="btn btn-primary btn-success btn-sm lengkapi" <?php echo $btn_lengkapi; ?>>Lengkapi data</button>
-        <button class='btn btn-primary btn-primary btn-sm kirim' <?php echo $btn_kirim; ?>>Kirim</button>
+        <button class='btn btn-primary btn-primary btn-sm kirim' <?php echo $btn_kirim; ?>>Kirim Data Ke Dukcapil</button>
         </div>
     </div>
 </div>

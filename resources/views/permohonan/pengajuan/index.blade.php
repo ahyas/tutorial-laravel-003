@@ -41,6 +41,11 @@
                 <td>{{$pihak->nomor_indentitas}}</td>
             </tr>
             <tr>
+                <td align="right"><b>Nomor Telp.</b></td>
+                <td width:5px>:</td>
+                <td>{{$pihak->no_telp}}</td>
+            </tr>
+            <tr>
                 <td align="right"><b>Jenis kelamin</b></td>
                 <td width:5px>:</td>
                 <td>@if($pihak->jenis_kelamin == 'P') Perempuan @else Laki-laki @endif</td>
@@ -52,7 +57,7 @@
                 <td align="left" colspan="2">Semula <b>Kawin</b>, Menjadi <b>Cerai hidup</b></td>
             </tr>
             <tr>
-                <td align="left"><b>Dasar perubahan :</b></td>
+                <td align="left"><b>Dasar perubahan </b></td>
                 <td>Akta Cerai No. {{$akta_cerai->nomor_akta_cerai}} Tanggal {{$akta_cerai->tgl_akta_cerai}}</td>
             </tr>
         </table>

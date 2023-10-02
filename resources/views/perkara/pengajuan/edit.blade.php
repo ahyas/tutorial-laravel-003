@@ -11,15 +11,40 @@
         {{ csrf_field() }}
             <div class="mb-3">
                 <label class="form-label"><b>Nama</b></label>
-                <input type="text" class="form-control" placeholder="Nama lengkap" name="nama" value="{{$pihak->nama}}">
+                <input type="text" class="form-control" placeholder="Nama lengkap" name="nama" value="{{$pihak->nama}}" autofocus>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>Alamat</b></label>
                 <input type="text" class="form-control" name="alamat" placeholder="Alamat" value="{{$pihak->alamat}}">
             </div>
+            
+            <div class="mb-3">
+                <label class="form-label"><b>Provinsi</b></label>
+                <select class="form-control" name="provinsi">
+                    <option value="0">Pilih Provinsi</option>
+                    @foreach($provinsi as $row)
+                    <option value="{{$row->id_provinsi}}" <?php if($row->id_provinsi == $pihak->propinsi_id){echo"selected"; } ?>>{{$row->provinsi}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Kabupaten</b></label>
+                <select class="form-control" name="kabupaten">
+                    <option value="0">Pilih Kabupaten</option>
+                    @foreach($kabupaten as $row)
+                    <option value="{{$row->id_kabupaten}}" <?php if($row->id_kabupaten == $pihak->kabupaten_id){echo"selected"; } ?>>{{$row->kabupaten}}</option>
+                    @endforeach
+                </select>
+            </div>
+            
             <div class="mb-3">
                 <label class="form-label"><b>NIK</b></label>
                 <input type="text" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan" value="{{$pihak->nomor_indentitas}}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><b>Nomor Telp.</b></label>
+                <input type="text" class="form-control" name="telepon" placeholder="Nomor Telpon" value="{{$pihak->telepon}}">
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>Jenis Kelamin</b></label>

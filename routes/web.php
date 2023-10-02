@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/edit", "PerkaraController@edit")->name("perkara.pengajuan.edit");
     Route::post("/perkara/{id_perkara}/pengajuan/{id_pihak}/update", "PerkaraController@update")->name("perkara.pengajuan.update");
     Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim","PerkaraController@kirim")->name("perkara.pengajuan.kirim");
+    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim_notifikasi","PerkaraController@kirim_notifikasi")->name("perkara.pengajuan.kirim_notifikasi");
+
+    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/detail", "PerkaraController@detail")->name("perkara.pengajuan.detail");
+    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim_pengajuan", "PerkaraController@kirim_pengajuan")->name("perkara.pengajuan.kirim_pengajuan");
 
     Route::get("/permohonan", "PermohonanController@index")->name("permohonan.index");
     Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}", "PermohonanController@pengajuan")->name("permohonan.pengajuan");

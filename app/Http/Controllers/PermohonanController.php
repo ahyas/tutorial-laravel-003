@@ -8,32 +8,15 @@ use DB;
 class PermohonanController extends Controller
 {
     public function index(){
-        $perkara = DB::table("perkara")
-        ->where("perkara.tahapan_terakhir_id",19)
-        ->select('perkara.perkara_id', 'perkara.tanggal_pendaftaran','perkara.tahapan_terakhir_id', 'perkara.jenis_perkara_text', 'perkara.nomor_perkara', 'perkara.tahapan_terakhir_text',"perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","no_seri_akta_cerai")
-        ->join("perkara_akta_cerai","perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
-        //->groupBy("perkara.tahapan_terakhir_text","perkara.perkara_id","perkara.tanggal_pendaftaran","perkara.tahapan_terakhir_id",".perkara.jenis_perkara_text","perkara.nomor_perkara","perkara_akta_cerai.nomor_akta_cerai","perkara_akta_cerai.tgl_akta_cerai","perkara_akta_cerai.no_seri_akta_cerai")
-        ->get();
-
-        $pihak1 = DB::table("perkara_pihak1")
-        ->select("perkara_pihak1.perkara_id","perkara_pihak1.pihak_id");
-
-        $para_pihak = DB::table("perkara_pihak2")
-        ->select("perkara_pihak2.perkara_id","perkara_pihak2.pihak_id")
-        ->union($pihak1)
-        ->get(); 
-
-        $pihak_info = DB::table("pihak")
-        ->whereNotNull("status_pengajuan")
-        ->orderBy("id","DESC")
-        ->get();
-
-        $status_pengajuan = DB::table("status_pengajuan")
-        ->get();
 
         $sql = DB::table("perkara")
         ->where("perkara.tahapan_terakhir_id", 19)
-        ->whereNotNull("c.status_pengajuan")
+        ->where("c.status_pengajuan",1)//Bila user sudah melakukan pengajuan
+        ->orWhere("d.status_pengajuan",1)
+        ->orWhere("c.status_pengajuan",2)
+        ->orWhere("d.status_pengajuan",2)
+        ->orWhere("c.status_pengajuan",3)
+        ->orWhere("d.status_pengajuan",3)
         ->select(
             "perkara.perkara_id", 
             "perkara_pihak1.nama AS nama_pihak1",
@@ -52,6 +35,8 @@ class PermohonanController extends Controller
             "perkara_akta_cerai.no_seri_akta_cerai",
             "c.jenis_kelamin AS jenis_kelamin1", 
             "d.jenis_kelamin AS jenis_kelamin2", 
+            "c.telepon AS no_telp1", 
+            "d.telepon AS no_telp2", 
             "c.nomor_indentitas AS no_identitas1", 
             "d.nomor_indentitas AS no_identitas2", 
             "a.status AS status_pengajuan1", 
@@ -72,13 +57,15 @@ class PermohonanController extends Controller
         ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
         ->get();
 
-        return view('permohonan.index', compact("perkara", "para_pihak","pihak_info","status_pengajuan", "sql"));
+        $baris = $sql->count();
+
+        return view('permohonan.index', compact("sql","baris"));
     }
 
     public function pengajuan($id_perkara, $id_pihak){
         $pihak = DB::table("pihak")
         ->where("pihak.id", $id_pihak)
-        ->select("id AS pihak_id","tempat_lahir","tanggal_lahir","jenis_kelamin","nomor_indentitas","nama","alamat","status_pengajuan")
+        ->select("id AS pihak_id","tempat_lahir","tanggal_lahir","jenis_kelamin","nomor_indentitas","nama","alamat","status_pengajuan","telepon AS no_telp")
         ->first();
 
         $akta_cerai = DB::table("perkara_akta_cerai")

@@ -61,7 +61,7 @@
                                 </li>-->
                             @endif
                             <!--Login sebagai super admin atau admin pta atau admin pa-->
-                            @if(Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                            @if(Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
                                 <li class="nav-item">
                                     <a class="nav-link active" href="{{route('perkara.index')}}">Perkara</a>
                                 </li>
