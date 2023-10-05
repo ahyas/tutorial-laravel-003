@@ -25,22 +25,32 @@
         @endswitch
         
         <table style="margin-bottom:15px">
-            <tr>
+            <tr valign="top">
                 <td align="right" width="120px"><b>Nama</b></td>
                 <td width:5px>:</td>
-                <td>{{$pihak->nama}}</td>
+                <td width="400px">{{$pihak->nama}}</td>
             </tr>
-            <tr>
+            <tr valign="top">
                 <td align="right"><b>Alamat</b></td>
                 <td width:5px>:</td>
                 <td>{{$pihak->alamat}}</td>
             </tr>
-            <tr>
+            <tr valign="top">
+                <td align="right"><b>Provinsi</b></td>
+                <td width:5px>:</td>
+                <td>{{$pihak->provinsi}}</td>
+            </tr>
+            <tr valign="top">
+                <td align="right"><b>Kabupaten</b></td>
+                <td width:5px>:</td>
+                <td>{{$pihak->kabupaten}}</td>
+            </tr>
+            <tr valign="top">
                 <td align="right"><b>NIK</b></td>
                 <td width:5px>:</td>
                 <td>{{$pihak->nomor_indentitas}}</td>
             </tr>
-            <tr>
+            <tr valign="top">
                 <td align="right"><b>Nomor Telp.</b></td>
                 <td width:5px>:</td>
                 <td>{{$pihak->no_telp}}</td>
@@ -57,8 +67,8 @@
                 <td align="left" colspan="2">Semula <b>Kawin</b>, Menjadi <b>Cerai hidup</b></td>
             </tr>
             <tr>
-                <td align="left"><b>Dasar perubahan </b></td>
-                <td>Akta Cerai No. {{$akta_cerai->nomor_akta_cerai}} Tanggal {{$akta_cerai->tgl_akta_cerai}}</td>
+                <td align="left">Dasar perubahan </td>
+                <td>Akta Cerai <b>No. {{$akta_cerai->nomor_akta_cerai}}</b> Tanggal <b>{{$akta_cerai->tgl_akta_cerai}}</b></td>
             </tr>
         </table>
         

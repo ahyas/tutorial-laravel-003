@@ -74,7 +74,7 @@ class PerkaraController extends Controller
             ->leftJoin("status_pengajuan AS b", "d.status_pengajuan", "=", "b.id")
             ->leftJoin("jenis_kelamin AS e", "c.jenis_kelamin", "=" ,"e.kode")
             ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
-            ->get();
+            ->paginate(10);
         }else{
             $sql = DB::table("perkara")
             ->where("perkara.tahapan_terakhir_id", 19)
@@ -115,7 +115,7 @@ class PerkaraController extends Controller
             ->leftJoin("status_pengajuan AS b", "d.status_pengajuan", "=", "b.id")
             ->leftJoin("jenis_kelamin AS e", "c.jenis_kelamin", "=" ,"e.kode")
             ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
-            ->get();
+            ->paginate(10);
         }
 
         return view('perkara.index', compact("sql"));
@@ -124,7 +124,7 @@ class PerkaraController extends Controller
     public function detail($id_perkara, $id_pihak){
         $pihak = DB::table("pihak")
         ->where("pihak.id", $id_pihak)
-        ->select("pihak.id AS pihak_id","pihak.tempat_lahir","pihak.tanggal_lahir","pihak.jenis_kelamin","pihak.nomor_indentitas","pihak.nama","alamat","pihak.status_pengajuan","pihak.telepon","kabupaten.nama AS kabupaten","provinsi.nama AS provinsi")
+        ->select("pihak.id AS pihak_id","pihak.tempat_lahir","pihak.tanggal_lahir","pihak.jenis_kelamin","pihak.nomor_indentitas","pihak.nama","alamat","pihak.status_pengajuan","pihak.telepon","kabupaten.nama AS kabupaten","provinsi.nama AS provinsi", "kabupaten.satker_anak","kabupaten.satker_induk")
         ->leftJoin("provinsi", "pihak.propinsi_id","=","provinsi.id")
         ->leftJoin("kabupaten", "pihak.kabupaten_id","=","kabupaten.id")
         ->first();
@@ -183,6 +183,12 @@ class PerkaraController extends Controller
     }
 
     public function update(Request $request, $id_perkara, $id_pihak){
+        $satker = DB::table("kabupaten")
+        ->where("id_provinsi", $request->provinsi)
+        ->Where("id", $request->kabupaten)
+        ->select("satker_induk","satker_anak")
+        ->first();
+
         DB::table("pihak")
         ->where("id",$id_pihak)
         ->update(
@@ -192,6 +198,8 @@ class PerkaraController extends Controller
                 "nomor_indentitas"=>$request->nik,
                 "propinsi_id"=>$request->provinsi,
                 "kabupaten_id"=>$request->kabupaten,
+                "satker_induk"=>$satker->satker_induk,
+                "satker_anak"=>$satker->satker_anak,
                 "telepon"=>$request->telepon,
                 "jenis_kelamin"=>$request->jenis_kelamin
             ],
@@ -228,6 +236,8 @@ class PerkaraController extends Controller
             "name"=>ucwords(strtolower($request->nama_pihak)),
             "username"=>strtolower($username),
             "password"=>Hash::make($password),
+            "satker_induk"=>$request->satker_induk,
+            "satker_anak"=>$request->satker_anak,
             "status"=>$request->status_user,
             "no_telp"=>$request->no_telp
         ]);

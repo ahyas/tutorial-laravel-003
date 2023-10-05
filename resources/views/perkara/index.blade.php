@@ -50,8 +50,8 @@
                                 <!--<th class="table-info" style="width:80px">No. Telp.</th>
                                 <th class="table-info">Pekerjaan</th>-->
                             </tr>
+                            
                             <tr>
-                                
                                 <td>{{$row->nama_pihak1}}</td>
                                 <td>{{$row->alamat_pihak1}}</td>
                                 <td>{{$row->no_telp1}}</td>
@@ -90,8 +90,8 @@
                                     @endif
                                 </td>
                             </tr>
+                            
                             <tr>
-                                
                                 <td>{{$row->nama_pihak2}}</td>
                                 <td>{{$row->alamat_pihak2}}</td>
                                 <td>{{$row->no_telp2}}</td>
@@ -134,6 +134,7 @@
                 </tr>
                 </table>
                 @endforeach
+                {{$sql->links()}}
         </div>
         </div>
     </div>

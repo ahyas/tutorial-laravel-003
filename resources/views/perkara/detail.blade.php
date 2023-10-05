@@ -143,7 +143,7 @@
                 });
             }
         });
-
+/*Kirim pengajuan pembaharuan data dari pihak ke dukcapil yang sesuai*/
         $("body").on("click", ".kirim_pengajuan", function(){
            if(confirm("Dengan ini Saya menyatakan data yang telah Saya input telah benar dan bersedia mengajukan data tersebut untuk dikirim ke Dinas Kependudukan dan Catatan Sipil untuk dilakukan perubahan data status perkawinan dari Kawin menjadi Cerai Hidup")){
             console.log("Terkirim");
@@ -161,15 +161,18 @@
         $("body").on("click",".lengkapi",function(){
             window.location.href= "{{route('perkara.pengajuan.edit', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}";
         });
-
+/*Kirim notifikasi dari petugas PA ke para pihak*/ 
         $("body").on("click", ".kirim_notifikasi", function(){
+            var satker_induk = "{{$pihak->satker_induk}}";
+            var satker_anak = "{{$pihak->satker_anak}}";
+            console.log(satker_induk, satker_anak)
             var nama_pihak = document.getElementById("nama_pihak").textContent;
             var no_telp = document.getElementById("no_telp").textContent;
             if(confirm("Anda yakin ingin mengirim notifikasi perkara ini?")){
                 $.ajax({
                     url:"{{route('perkara.pengajuan.kirim_notifikasi', ['id_perkara'=>$akta_cerai->perkara_id, 'id_pihak'=>$pihak->pihak_id])}}",
                     type:"GET",
-                    data:{status_pengajuan:4, status_user:1, nama_pihak:nama_pihak, no_telp:no_telp},
+                    data:{status_pengajuan:4, status_user:1, nama_pihak:nama_pihak, no_telp:no_telp, satker_induk:satker_induk, satker_anak:satker_anak},
                     success:function(data){
                         window.location.href = "{{route('perkara.index')}}";
                     }

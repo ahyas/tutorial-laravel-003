@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class PermohonanController extends Controller
 {
     public function index(){
-
         $sql = DB::table("perkara")
         ->where("perkara.tahapan_terakhir_id", 19)
-        ->where("c.status_pengajuan",1)//Bila user sudah melakukan pengajuan
+        ->whereNotNull("perkara_pihak1.nama")
+        ->Where("c.status_pengajuan",1)//Bila user sudah melakukan pengajuan
         ->orWhere("d.status_pengajuan",1)
         ->orWhere("c.status_pengajuan",2)
         ->orWhere("d.status_pengajuan",2)
@@ -33,6 +34,10 @@ class PermohonanController extends Controller
             "perkara_akta_cerai.nomor_akta_cerai", 
             "perkara_akta_cerai.tgl_akta_cerai",
             "perkara_akta_cerai.no_seri_akta_cerai",
+            "c.satker_induk AS satker_induk1", 
+            "d.satker_induk AS satker_induk2",
+            "c.satker_anak AS satker_anak1", 
+            "d.satker_anak AS satker_anak2",
             "c.jenis_kelamin AS jenis_kelamin1", 
             "d.jenis_kelamin AS jenis_kelamin2", 
             "c.telepon AS no_telp1", 
@@ -46,16 +51,16 @@ class PermohonanController extends Controller
             "e.jenis_kelamin AS jenis_kelamin1",
             "f.jenis_kelamin AS jenis_kelamin2"
         )
-        ->join("perkara_akta_cerai", "perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
-        ->join("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
-        ->join("perkara_pihak2","perkara.perkara_id", "=", "perkara_pihak2.perkara_id")
-        ->join("pihak AS c", "perkara_pihak1.pihak_id", "=", "c.id")
-        ->join("pihak AS d", "perkara_pihak2.pihak_id", "=", "d.id")
+        ->leftjoin("perkara_akta_cerai", "perkara.perkara_id","=","perkara_akta_cerai.perkara_id")
+        ->leftjoin("perkara_pihak1", "perkara.perkara_id","=","perkara_pihak1.perkara_id")
+        ->leftjoin("perkara_pihak2","perkara.perkara_id", "=", "perkara_pihak2.perkara_id")
+        ->leftjoin("pihak AS c", "perkara_pihak1.pihak_id", "=", "c.id")
+        ->leftjoin("pihak AS d", "perkara_pihak2.pihak_id", "=", "d.id")
         ->leftJoin("status_pengajuan AS a", "c.status_pengajuan", "=", "a.id")
         ->leftJoin("status_pengajuan AS b", "d.status_pengajuan", "=", "b.id")
         ->leftJoin("jenis_kelamin AS e", "c.jenis_kelamin", "=" ,"e.kode")
         ->leftJoin("jenis_kelamin AS f", "d.jenis_kelamin", "=" ,"f.kode")
-        ->get();
+        ->paginate(10);
 
         $baris = $sql->count();
 
@@ -65,7 +70,9 @@ class PermohonanController extends Controller
     public function pengajuan($id_perkara, $id_pihak){
         $pihak = DB::table("pihak")
         ->where("pihak.id", $id_pihak)
-        ->select("id AS pihak_id","tempat_lahir","tanggal_lahir","jenis_kelamin","nomor_indentitas","nama","alamat","status_pengajuan","telepon AS no_telp")
+        ->select("pihak.id AS pihak_id","pihak.tempat_lahir","pihak.tanggal_lahir","pihak.jenis_kelamin","pihak.nomor_indentitas","pihak.nama","pihak.alamat","pihak.status_pengajuan","pihak.telepon AS no_telp", "kabupaten.nama AS kabupaten","provinsi.nama AS provinsi")
+        ->leftJoin("provinsi", "pihak.propinsi_id","=","provinsi.id")
+        ->leftJoin("kabupaten", "pihak.kabupaten_id","=","kabupaten.id")
         ->first();
 
         $akta_cerai = DB::table("perkara_akta_cerai")
