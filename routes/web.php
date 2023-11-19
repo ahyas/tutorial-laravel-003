@@ -16,42 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name("welcome");
-Route::get('login', 'AuthController@showFormLogin')->name('login');
-Route::post('login', 'AuthController@login');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('register', 'AuthController@showFormRegister')->name('register');
-    Route::post('register', 'AuthController@register');
-
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::post("logout", "AuthController@logout")->name("logout");
-
-    Route::get("/perkara", "PerkaraController@index")->name("perkara.index");
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}", "PerkaraController@pengajuan")->name("perkara.pengajuan");
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/edit", "PerkaraController@edit")->name("perkara.pengajuan.edit");
-    Route::post("/perkara/{id_perkara}/pengajuan/{id_pihak}/update", "PerkaraController@update")->name("perkara.pengajuan.update");
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim","PerkaraController@kirim")->name("perkara.pengajuan.kirim");
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim_notifikasi","PerkaraController@kirim_notifikasi")->name("perkara.pengajuan.kirim_notifikasi");
-
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/detail", "PerkaraController@detail")->name("perkara.pengajuan.detail");
-    Route::get("/perkara/{id_perkara}/pengajuan/{id_pihak}/kirim_pengajuan", "PerkaraController@kirim_pengajuan")->name("perkara.pengajuan.kirim_pengajuan");
-
-    Route::get("/permohonan", "PermohonanController@index")->name("permohonan.index");
-    Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}", "PermohonanController@pengajuan")->name("permohonan.pengajuan");
-    Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/proses", "PermohonanController@proses")->name("permohonan.pengajuan.proses");
-    Route::get("/permohonan/{id_perkara}/pengajuan/{id_pihak}/selesai", "PermohonanController@selesai")->name("permohonan.pengajuan.selesai");
-
-    Route::get("/users", "UsersController@index")->name("users.index");
-    Route::get("/users/add", "UsersController@add")->name("users.add");
-    Route::get("/users/{id_user}/detail", "UsersController@detail")->name("users.detail");
-    Route::get("/users/{id_user}/edit", "UsersController@edit")->name("users.edit");
-    Route::post("/users/{id_user}/update", "UsersController@update")->name("users.update");
-    Route::get("/users/{id_user}/delete", "UsersController@delete")->name("users.delete");
-    Route::get("/users/{id_user}/reset", "UsersController@reset")->name("users.reset");
-    Route::post("/users/{id_user}/update_password", "UsersController@update_password")->name("users.update_password");
-    
-    Route::get("/satker_induk/{id_role}", "SatkerController@satker_induk")->name("satker_induk");
-    Route::get("/satker_anak/{id_induk}", "SatkerController@satker_anak")->name("satker_anak");
-
-    Route::get("/test_query", "PerkaraController@test_query");
-});
+Route::get('kepegawaian/index', 'kepegawaian\KepegawaianController@index');
+Route::get('kepegawaian/{id}/edit', 'kepegawaian\KepegawaianController@edit');
+Route::put('kepegawaian/{id}/update', 'kepegawaian\KepegawaianController@update');
+Route::get('kepegawaian/add', 'kepegawaian\KepegawaianController@add');
+Route::post('kepegawaian/save', 'kepegawaian\KepegawaianController@save');
+Route::get('kepegawaian/{id}/delete', 'kepegawaian\KepegawaianController@delete');
+Route::get('kepegawaian/find', 'kepegawaian\KepegawaianController@find');
