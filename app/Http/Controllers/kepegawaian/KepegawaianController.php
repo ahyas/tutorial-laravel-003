@@ -98,7 +98,7 @@ class KepegawaianController extends Controller
         DB::table("tb_pegawai_003")
         ->where("id", $id)
         ->delete();
-
+        Session::flash('success', 'Data berhasil dihapus');
         return redirect('kepegawaian/index');
     }
     
@@ -107,6 +107,9 @@ class KepegawaianController extends Controller
         ->where('nama','like',"%".$request->kata_kunci."%")
         ->get();
 
+        $count = $table->count();
+
+        Session::flash('success', $count.' Data berhasil ditemukan');
         return view("kepegawaian/index", compact("table"));
     }
 }
